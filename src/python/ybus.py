@@ -32,9 +32,3 @@ def compute_ybus(bus_data, line_data):
 
     return ybus
 
-if __name__ == "__main__":
-    # Example bus data and line data
-  
-    ybus = compute_ybus(bus_data, line_data)
-    print("Y-bus matrix:")
-    print(ybus)

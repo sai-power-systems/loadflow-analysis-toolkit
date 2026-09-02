@@ -34,27 +34,10 @@ class SystemData:
                     ])
         print(self.bus_data)
 
-        # --- GEN DATA (Needed for fault) ---
-        # Only slack has generation in this distribution system
-        self.gen_data = [
-            {
-                "bus": 18,
-                "type": "SLACK",
-                "P_MW": 17.981,      # committed from Table 3.1
-                "Q_MVAr": 5.6225,
-                "Pmax_MW": 30,
-                "Qmin_MVAr": -5.0,
-                "Qmax_MVAr": 10.0,
-                # FAULT DATA - typical defaults
-                "Xd_pu": 1.2,        # synchronous
-                "Xd_prime_pu": 0.3,  # transient
-                "Xd_double_prime_pu": 0.20,  # subtransient - used for fault
-                "X0_pu": 0.08,
-                "Xn_pu": 0.0,        # solidly grounded
-                "grounded": True
-            }
-        ]
+        # --- GEN DATA (Load from CSV for loadflow and fault analysis) ---
+        self.gen_data = pd.read_csv("data/generators.csv").to_dict("records")
 
+        
         # --- LINE DATA: R1/X1/B1 + R0/X0 (for fault) ---
         # R0 ~ 2.5*R1, X0 ~ 2.5-3*X1 typical for overhead distribution per IEEE Std 141
         raw_lines_pos = pd.read_csv("data/lines.csv").values
