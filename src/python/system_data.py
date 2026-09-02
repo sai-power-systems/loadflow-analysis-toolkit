@@ -29,15 +29,32 @@ class SystemData:
         bus_data_raw = pd.read_csv("data/buses.csv").values
 
         self.bus_data = pd.DataFrame([
-                        {"bus_no": b, "P_MW": v, "Q_MVAR": d, "type": t}
-                        for b,v,d,t in bus_data_raw
+                        {"bus_no": b, "P_MW": p, "Q_MVAR": q, "type": t, "V_mag": v, "V_ang": d}
+                        for b,p,q,t,v,d in bus_data_raw
                     ])
-        print(self.bus_data)
+      
 
+
+        generator_columns = [
+        "bus",
+        "type",
+        "P_MW",
+        "Q_MVAr",
+        "Pmax_MW",
+        "Qmin_MVAr",
+        "Qmax_MVAr",
+        "Xd_pu",
+        "Xd_prime_pu",
+        "Xd_double_prime_pu",
+        "X0_pu",
+        "Xn_pu",
+        "grounded",
+    ]
         # --- GEN DATA (Load from CSV for loadflow and fault analysis) ---
-        self.gen_data = pd.read_csv("data/generators.csv").to_dict("records")
-
+        gen_data = pd.read_csv("data/generators.csv")
+        self.gen_data = pd.DataFrame(gen_data, columns=generator_columns)
         
+
         # --- LINE DATA: R1/X1/B1 + R0/X0 (for fault) ---
         # R0 ~ 2.5*R1, X0 ~ 2.5-3*X1 typical for overhead distribution per IEEE Std 141
         raw_lines_pos = pd.read_csv("data/lines.csv").values
@@ -46,8 +63,17 @@ class SystemData:
                         {"from_bus": f, "to_bus": t, "R1": r1, "X1": x1, "B1": b1, "R0": r0, "X0": x0, "B0": b0}
                         for f,t,r1,x1,b1,r0,x0,b0 in raw_lines_pos
                     ])
-        print(self.line_data)
+      
 
+
+
+    def classify_buses(self):
+        """Classify buses into PQ, PV, and Slack types."""
+        bus_types = self.bus_data["type"].values
+        pq_buses = np.where(bus_types == "PQ")[0]
+        pv_buses = np.where(bus_types == "PV")[0]
+        slack_buses = np.where(bus_types == "SLACK")[0]
+        return pq_buses, pv_buses, slack_buses
 
     # Helpers for fault analysis
     def get_ybus_positive(self):
@@ -64,3 +90,7 @@ dd.load_data()
 bus_data = dd.bus_data
 line_data = dd.line_data
 gen_data = dd.gen_data
+dd.classify_buses()
+slack_buses = dd.classify_buses()[2]
+pv_buses = dd.classify_buses()[1]
+pq_buses = dd.classify_buses()[0]
