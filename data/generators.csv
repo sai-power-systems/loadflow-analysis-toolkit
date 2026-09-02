@@ -1,0 +1,2 @@
+bus,type,P_MW,Q_MVAr,Pmax_MW,Qmin_MVAr,Qmax_MVAr,Xd_pu,Xd_prime_pu,Xd_double_prime_pu,X0_pu,Xn_pu,grounded
+18,SLACK,17.981,5.6225,30,-5.0,10.0,1.2,0.3,0.2,0.08,0.0,True

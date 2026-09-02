@@ -1,0 +1,2 @@
+from_bus,to_bus,X_pu,R_pu,X0_pu,connection,grounded
+17,18,0.06753,0.00312,0.06753,Dyn11,True
