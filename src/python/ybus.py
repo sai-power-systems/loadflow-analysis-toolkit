@@ -1,4 +1,6 @@
 import numpy as np
+from system_data import bus_data, line_data
+
 def compute_ybus(bus_data, line_data):
     """
     Compute the Y-bus matrix for the power system.
@@ -12,12 +14,13 @@ def compute_ybus(bus_data, line_data):
     """
 
     ybus = np.zeros((len(bus_data), len(bus_data)), dtype=complex)
-    for line in line_data:
-        from_bus = int(line[0]) - 1  # Adjust for zero-based indexing
-        to_bus = int(line[1]) - 1    # Adjust for zero-based indexing
-        r = line[2]
-        x = line[3]
-        b = line[4]
+    lines = line_data.to_dict("records") if hasattr(line_data, "to_dict") else line_data
+    for line in lines:
+        from_bus = int(line["from_bus"]) - 1  # Adjust for zero-based indexing
+        to_bus = int(line["to_bus"]) - 1    # Adjust for zero-based indexing
+        r = float(line["R1"])
+        x = float(line["X1"])
+        b = float(line["B1"])
 
         z = complex(r, x)
         y = 1 / z
@@ -29,3 +32,9 @@ def compute_ybus(bus_data, line_data):
 
     return ybus
 
+if __name__ == "__main__":
+    # Example bus data and line data
+  
+    ybus = compute_ybus(bus_data, line_data)
+    print("Y-bus matrix:")
+    print(ybus)
