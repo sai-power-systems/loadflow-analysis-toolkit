@@ -5,9 +5,6 @@ from system_data import bus_data, line_data, dd
 from ybus import compute_ybus
 from jacobian import build_jacobian, calculate_injected_power
 
-print("Newton-Raphson Load Flow Results")
-print("--------------------------------")
-
 def initialize_voltage(bus_data):
 	"""Create the initial complex voltage vector from the bus data."""
 	voltage_magnitude = bus_data["V_mag"].fillna(1.0).to_numpy(dtype=float)
@@ -114,10 +111,10 @@ def newton_raphson(
 		)
 		maximum_mismatch = np.max(np.abs(mismatch))
 
-		print(
-			f"Iteration {iteration + 1:03d}: "
-			f"mismatch = {maximum_mismatch:.6e}"
-		)
+		# print(
+		# 	f"Iteration {iteration + 1:03d}: "
+		# 	f"mismatch = {maximum_mismatch:.6e}"
+		# )
 
 		if maximum_mismatch < tolerance:
 			return voltage, iteration + 1, maximum_mismatch
@@ -185,37 +182,43 @@ def newton_raphson(
 	)
 
 
-ybus = compute_ybus(
-	bus_data,
-	line_data,
-	dd.transformer_data,
-)
+def run_load_flow():
+	"""Build the network, solve it, and return the result table."""
+	ybus = compute_ybus(
+		bus_data,
+		line_data,
+		dd.transformer_data,
+	)
 
-voltage, iterations, final_mismatch = newton_raphson(
-	bus_data,
-	ybus,
-	base_mva=dd.base_mva,
-)
+	voltage, iterations, final_mismatch = newton_raphson(
+		bus_data,
+		ybus,
+		base_mva=dd.base_mva,
+	)
 
-current = ybus @ voltage
-power = voltage * np.conj(current)
+	current = ybus @ voltage
+	power = voltage * np.conj(current)
 
-results = pd.DataFrame({
-	"Bus": bus_data["bus_no"].to_numpy(),
-	"V_mag": np.abs(voltage),
-	"V_ang_deg": np.degrees(np.angle(voltage)),
-	"I_real": current.real,
-	"I_imag": current.imag,
-	"P_MW": power.real * dd.base_mva,
-	"Q_MVAr": power.imag * dd.base_mva,
-})
+	resultnr = pd.DataFrame({
+		"Bus": bus_data["bus_no"].to_numpy(),
+		"V_mag": np.abs(voltage),
+		"V_ang_deg": np.degrees(np.angle(voltage)),
+		"I_real": current.real,
+		"I_imag": current.imag,
+		"P_MW": power.real * dd.base_mva,
+		"Q_MVAr": power.imag * dd.base_mva,
+	})
+
+	# print()
+	# print(f"Converged after {iterations} iterations")
+	# print(f"Final mismatch: {final_mismatch:.6e}")
+	# print()
+	
+
+	return [resultnr,iterations,final_mismatch]
 
 
-
-
-print()
-print(f"Converged after {iterations} iterations")
-print(f"Final mismatch: {final_mismatch:.6e}")
-print()
-
-print(results.to_string(index=False))
+if __name__ == "__main__":
+	print("Newton-Raphson Load Flow Results")
+	print("--------------------------------")
+	run_load_flow()
