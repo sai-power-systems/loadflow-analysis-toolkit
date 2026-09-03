@@ -1,34 +1,38 @@
 import numpy as np
-from system_data import bus_data, line_data
-
-def compute_ybus(bus_data, line_data):
-    """
-    Compute the Y-bus matrix for the power system.
-
-    Args:
-        bus_data (numpy.ndarray): The bus data array.
-        line_data (numpy.ndarray): The line data array.
-
-    Returns:
-        ybus (numpy.ndarray): The Y-bus matrix.
-    """
-
+import pandas as pd
+def compute_ybus(bus_data, line_data, transformer_data=None):
     ybus = np.zeros((len(bus_data), len(bus_data)), dtype=complex)
-    lines = line_data.to_dict("records") if hasattr(line_data, "to_dict") else line_data
+
+    lines = line_data.to_dict("records")
+
+    if transformer_data is not None:
+        transformers = transformer_data.to_dict("records")
+
+        for transformer in transformers:
+            lines.append({
+                "from_bus": transformer["from_bus"],
+                "to_bus": transformer["to_bus"],
+                "R1": transformer["R_pu"],
+                "X1": transformer["X_pu"],
+                "B1": 0.0,
+            })
+
+
     for line in lines:
-        from_bus = int(line["from_bus"]) - 1  # Adjust for zero-based indexing
-        to_bus = int(line["to_bus"]) - 1    # Adjust for zero-based indexing
-        r = float(line["R1"])
-        x = float(line["X1"])
-        b = float(line["B1"])
+        from_bus = int(line["from_bus"]) - 1
+        to_bus = int(line["to_bus"]) - 1
 
-        z = complex(r, x)
-        y = 1 / z
+        resistance = float(line["R1"])
+        reactance = float(line["X1"])
+        susceptance = float(line.get("B1", 0.0))
 
-        ybus[from_bus, from_bus] += y + complex(0, b / 2)
-        ybus[to_bus, to_bus] += y + complex(0, b / 2)
-        ybus[from_bus, to_bus] -= y
-        ybus[to_bus, from_bus] -= y
+        impedance = complex(resistance, reactance)
+        series_admittance = 1 / impedance
+        shunt_admittance = complex(0, susceptance / 2)
+
+        ybus[from_bus, from_bus] += series_admittance + shunt_admittance
+        ybus[to_bus, to_bus] += series_admittance + shunt_admittance
+        ybus[from_bus, to_bus] -= series_admittance
+        ybus[to_bus, from_bus] -= series_admittance
 
     return ybus
-

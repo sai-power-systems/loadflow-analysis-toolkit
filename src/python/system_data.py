@@ -34,7 +34,8 @@ class SystemData:
                     ])
       
 
-
+        self.transformer_data = pd.read_csv("data/transformers.csv")
+        
         generator_columns = [
         "bus",
         "type",
