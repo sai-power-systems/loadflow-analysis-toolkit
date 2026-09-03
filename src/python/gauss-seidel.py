@@ -4,6 +4,9 @@ import pandas as pd
 from system_data import bus_data, line_data, dd
 from ybus import compute_ybus
 
+print("Gauss-Seidel Load Flow Results")
+print("--------------------------------")
+
 ybus = compute_ybus(bus_data, line_data)
 
 pq_buses, pv_buses, slack_buses = dd.classify_buses()
@@ -66,5 +69,8 @@ results = pd.DataFrame({
     "P_MW": S.real,
     "Q_MVAr": S.imag,
 })
+
+
+
 
 print(results.to_string(index=False))
