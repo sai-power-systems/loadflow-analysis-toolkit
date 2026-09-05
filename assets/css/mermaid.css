@@ -1,0 +1,10 @@
+/* Orange background with white text */
+.mermaid .node rect {
+    fill: #f57c00 !important;
+    stroke: #e65100 !important;
+}
+
+.mermaid .nodeLabel {
+    fill: white !important;
+    color: white !important;
+}

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="./assets/css/mermaid.css">
+
 # Load Flow Analysis Toolkit
 
 Python toolkit for steady-state power-system load-flow analysis on an IEEE
@@ -22,25 +24,30 @@ Newton-Raphson methods, and calculates branch power flows and losses.
 
 ```mermaid
 treeView-beta
-  ┗━ loadflow_analysis :::highlight
-    ┣━━ data ## data input files(CSV)
-    ┃   ┣━━ buses.csv ## bus data
-    ┃   ┣━━ generators.csv ## Generator data
-    ┃   ┣━━ lines.csv ## line data
-    ┃   ┗━━ transformers.csv ## transformer data
-    ┣━━ src
-    ┃   ┗━━ python ## code files
-    ┃       ┣━━ main.py ## main file to run
-    ┃       ┣━━ system_data.py ## load system data
-    ┃       ┣━━ ybus.py ## Bus admittance matrix
-    ┃       ┣━━ gauss_seidel.py ## Gauss-Siedel method of loadflow
-    ┃       ┣━━ newton_raphson.py ## Newton-Raphson method of loadflow
-    ┃       ┣━━ jacobian.py ## Jacobian for NR method
-    ┃       ┣━━ power_calc.py ## del p and del Q
-    ┃       ┗━━ line_flows_and_losses.py ## line flows and losses
-    ┣━━ LICENSE
-    ┗━━ README.md
+  ┗━ 📦 loadflow_analysis
+    ┣━━ 📂 data ## data input files (CSV)
+    ┃   ┣━━ 📊 buses.csv ## bus data
+    ┃   ┣━━ ⚡ generators.csv ## Generator data
+    ┃   ┣━━ 🔗 lines.csv ## line data
+    ┃   ┗━━ 🔌 transformers.csv ## transformer data
+    ┣━━ 💻 src
+    ┃   ┗━━ 🐍 python ## code files
+    ┃       ┣━━ 🚀 main.py ## main file to run
+    ┃       ┣━━ 📋 system_data.py ## load system data
+    ┃       ┣━━ 🧮 ybus.py ## Bus admittance matrix
+    ┃       ┣━━ 🔄 gauss_seidel.py ## Gauss-Seidel method of loadflow
+    ┃       ┣━━ ⚙️ newton_raphson.py ## Newton-Raphson method of loadflow
+    ┃       ┣━━ 📐 jacobian.py ## Jacobian for NR method
+    ┃       ┣━━ ∑ power_calc.py ## del P and del Q
+    ┃       ┗━━ 📈 line_flows_and_losses.py ## line flows and losses
+    ┣━━ ⚖️ LICENSE ## MIT license
+    ┗━━ 📘 README.md
+
+
 ```
+
+
+
 
 ## Requirements
 
