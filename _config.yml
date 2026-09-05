@@ -1,7 +1,8 @@
 title: Power system load flow analysis toolkit
 description: trying to write Load flow analysis programs in python
 
-theme: jekyll-theme-slate
+# theme: jekyll-theme-slate
+remote-theme: abhn/Soot-Spirits
 
 
 plugins:
