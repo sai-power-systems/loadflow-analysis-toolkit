@@ -23,9 +23,9 @@ Newton-Raphson methods, and calculates branch power flows and losses.
 ```mermaid
 treeView-beta
   ┣━━ loadflow_analysis
-    ┣━━ data
+    ┣━━ data ## data input files(CSV)
     ┃   ┣━━ buses.csv
-    ┃   ┣━━ generators.csv
+    ┃   ┣━━ generators.csv ## Generator data
     ┃   ┣━━ lines.csv
     ┃   ┗━━ transformers.csv
     ┣━━ src

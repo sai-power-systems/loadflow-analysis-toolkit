@@ -26,6 +26,3 @@ mermaid:
   version: "11.14.1"
 
 
-exclude:
- - Gemfile
- - Gemfile.lock
