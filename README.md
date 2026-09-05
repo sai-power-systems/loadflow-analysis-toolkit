@@ -24,6 +24,8 @@ Newton-Raphson methods, and calculates branch power flows and losses.
 
 treeView-beta
   "loadflow_analysis"
+    "LICENSE"
+    "README.md"
     "data"
       "buses.csv"
       "generators.csv"
@@ -39,8 +41,6 @@ treeView-beta
         "jacobian.py"
         "power_calc.py"
         "line_flows_and_losses.py"
-    "LICENSE"
-    "README.md"
 ```
 
 ## Requirements
