@@ -1,3 +1,6 @@
+---
+nav_order: 4
+---
 # Network Model & Data Schemas
 
 The default case uses a **100 MVA** and **12.5 kV** base and contains:

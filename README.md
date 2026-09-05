@@ -1,4 +1,6 @@
-
+---
+nav_order: 1
+---
 # Load Flow Analysis Toolkit
 
 Python toolkit for steady-state power-system load-flow analysis on an IEEE
