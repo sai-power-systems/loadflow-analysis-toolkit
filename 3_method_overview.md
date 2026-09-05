@@ -1,4 +1,4 @@
-# Numerical Methods & Outputs (`methods.md`)
+# Numerical Methods & Outputs
 
 ## Method Overview
 
