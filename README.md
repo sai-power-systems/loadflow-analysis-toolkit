@@ -32,7 +32,7 @@ treeView-beta
     ┃   ┗━━ python
     ┃       ┣━━ main.py
     ┃       ┣━━ system_data.py
-    ┃       ┣━━ ybus.py
+    ┃       ┣━━ ybus.py ## Bus admittance matrix
     ┃       ┣━━ gauss_seidel.py
     ┃       ┣━━ newton_raphson.py
     ┃       ┣━━ jacobian.py

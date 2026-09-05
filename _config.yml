@@ -23,6 +23,6 @@ mathjax:
   enabled: true
 
 mermaid:
-  version: "11.14.1"
+  version: "11.17.2"
 
 
