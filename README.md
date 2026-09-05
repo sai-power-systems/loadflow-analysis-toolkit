@@ -21,26 +21,26 @@ Newton-Raphson methods, and calculates branch power flows and losses.
 ## Repository layout
 
 ```mermaid
-
 treeView-beta
-  "loadflow_analysis"
-    "LICENSE"
-    "README.md"
-    "data"
-      "buses.csv"
-      "generators.csv"
-      "lines.csv"
-      "transformers.csv"
-    "src"
-      "python"
-        "main.py"
-        "system_data.py"
-        "ybus.py"
-        "gauss_seidel.py"
-        "newton_raphson.py"
-        "jacobian.py"
-        "power_calc.py"
-        "line_flows_and_losses.py"
+  loadflow_analysis
+    data
+      buses.csv
+      generators.csv
+      lines.csv
+      transformers.csv
+    src
+      python
+        main.py
+        system_data.py
+        ybus.py
+        gauss_seidel.py
+        newton_raphson.py
+        jacobian.py
+        power_calc.py
+        line_flows_and_losses.py
+    LICENSE
+    README.md
+
 ```
 
 ## Requirements
