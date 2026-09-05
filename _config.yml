@@ -1,0 +1,21 @@
+title: Power system load flow analysis toolkit
+description: trying to write Load flow analysis programs in python
+
+theme: pages-themes/dinky
+
+plugins:
+ - jekyll-feed
+ - jekyll-seo-tag
+ - jekyll-include-cache
+
+
+
+
+markdown: kramdown
+mathjax:
+  enabled: true
+
+
+exclude:
+ - Gemfile
+ - Gemfile.lock
