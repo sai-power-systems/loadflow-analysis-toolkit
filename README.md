@@ -41,7 +41,6 @@ loadflow-analysis/
   LICENSE
   README.md
 
-
 ```
 
 ## Requirements
