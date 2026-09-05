@@ -5,7 +5,7 @@ remote-theme: pages-themes/slate
 
 
 plugins:
- - jekyll-feed
+ - jekyll-remote-theme
  - jekyll-seo-tag
  - jekyll-include-cache
 
