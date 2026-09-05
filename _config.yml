@@ -22,6 +22,9 @@ markdown: kramdown
 mathjax:
   enabled: true
 
+mermaid:
+  version: "11.12.1"
+
 
 exclude:
  - Gemfile
