@@ -29,7 +29,7 @@ class SystemData:
         bus_data_raw = pd.read_csv("data/buses.csv").values
 
         self.bus_data = pd.DataFrame([
-                        {"bus_no": b, "P_MW": p, "Q_MVAR": q, "type": t, "V_mag": v, "V_ang": d}
+                        {"bus_no": b, "P_MW": p, "Q_MVAr": q, "type": t, "V_mag": v, "V_ang": d}
                         for b,p,q,t,v,d in bus_data_raw
                     ])
       

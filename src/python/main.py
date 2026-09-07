@@ -1,8 +1,14 @@
 
-import system_data as sd
 from line_flows_and_losses import calculate_line_flows_and_losses
 from gauss_seidel import gauss_seidel
 from newton_raphson import run_load_flow
+from system_data import bus_data, gen_data
+
+print(bus_data.columns)
+print(bus_data.index)
+print(gen_data.columns)
+print(gen_data.index)
+
 
 print("Voltages and currents: ")
 print("Gauss-Seidel")
@@ -34,3 +40,4 @@ print(line_flows_nr)
 print("Line losses: ")
 print("--------------------------")
 print(losses_nr)
+

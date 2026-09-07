@@ -1,12 +1,13 @@
 import numpy as np
 import pandas as pd
-from system_data import bus_data, line_data, gen_data,dd
+from system_data import bus_data, line_data,dd
 from ybus import compute_ybus
 
 
 def gauss_seidel(
     base_mva: float = 100.0, max_iterations: int = 100, tolerance: float = 1e-6
 ):
+    gen_data = dd.gen_data
     """Executes the Gauss-Seidel load flow analysis on a power system network.
 
     Parameters:
@@ -19,7 +20,7 @@ def gauss_seidel(
     """
     ybus = compute_ybus(bus_data, line_data)
     pq_buses, pv_buses, slack_buses = dd.classify_buses()
-    gen_data = gen_data.set_index("bus_no")
+    gen_data = gen_data.set_index("bus")
     
     # Initialize complex voltage array (pu)
     v_mag = bus_data["V_mag"].to_numpy(dtype=float)
@@ -40,7 +41,7 @@ def gauss_seidel(
         for i in pq_buses:
             # Convert MW/MVAr to per-unit
             p_spec = bus_data.loc[i, "P_MW"] / base_mva
-            q_spec = bus_data.loc[i, "Q_MVAR"] / base_mva
+            q_spec = bus_data.loc[i, "Q_MVAr"] / base_mva
             s_spec = complex(p_spec, q_spec)
 
             sum_yv = np.dot(ybus[i, :], V) - ybus[i, i] * V[i]
