@@ -98,7 +98,7 @@ def newton_raphson(
 	voltage = initialize_voltage(bus_data)
 
 	specified_p = bus_data["P_MW"].to_numpy(dtype=float) / base_mva
-	specified_q = bus_data["Q_MVAR"].to_numpy(dtype=float) / base_mva
+	specified_q = bus_data["Q_MVAr"].to_numpy(dtype=float) / base_mva
 
 	for iteration in range(max_iterations):
 		mismatch = calculate_mismatch(
@@ -203,8 +203,7 @@ def run_load_flow():
 		"Bus": bus_data["bus_no"].to_numpy(),
 		"V_mag": np.abs(voltage),
 		"V_ang_deg": np.degrees(np.angle(voltage)),
-		"I_real": current.real,
-		"I_imag": current.imag,
+		"I_pu": current,
 		"P_MW": power.real * dd.base_mva,
 		"Q_MVAr": power.imag * dd.base_mva,
 	})

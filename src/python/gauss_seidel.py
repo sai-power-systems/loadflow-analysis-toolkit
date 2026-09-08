@@ -5,7 +5,9 @@ from ybus import compute_ybus
 
 
 def gauss_seidel(
-    base_mva: float = 100.0, max_iterations: int = 100, tolerance: float = 1e-6
+    base_mva: float = 100.0,
+    max_iterations: int = 100,
+    tolerance: float = 1e-4,
 ):
     gen_data = dd.gen_data
     """Executes the Gauss-Seidel load flow analysis on a power system network.
@@ -20,8 +22,9 @@ def gauss_seidel(
     """
     ybus = compute_ybus(bus_data, line_data)
     pq_buses, pv_buses, slack_buses = dd.classify_buses()
-    gen_data = gen_data.set_index("bus")
-    
+    gen_data = dd.gen_data.set_index("bus")
+    error = np.inf
+
     # Initialize complex voltage array (pu)
     v_mag = bus_data["V_mag"].to_numpy(dtype=float)
     v_ang = np.radians(bus_data["V_ang"].to_numpy(dtype=float))
@@ -49,15 +52,16 @@ def gauss_seidel(
 
         # Update PV Buses
         for i in pv_buses:
+            bus_id = int(bus_data.loc[i, "bus_no"])
             p_spec = bus_data.loc[i, "P_MW"] / base_mva
 
             # Calculate reactive power injection (Q_calc)
             i_i = np.dot(ybus[i, :], V)
             q_calc = -np.imag(np.conj(V[i]) * i_i)
 
-            # Enforce reactive power limits (converted to per-unit)
-            q_min = gen_data.loc[i, "Qmin_MVAr"] / base_mva
-            q_max = gen_data.loc[i, "Qmax_MVAr"] / base_mva
+            # Enforce reactive power limits with the generator table keyed by bus ID
+            q_min = gen_data.loc[bus_id, "Qmin_MVAr"] / base_mva
+            q_max = gen_data.loc[bus_id, "Qmax_MVAr"] / base_mva
             q_calc = np.clip(q_calc, q_min, q_max)
 
             s_spec = complex(p_spec, q_calc)
@@ -71,7 +75,7 @@ def gauss_seidel(
         # Check convergence
         error = np.max(np.abs(V - previous_V))
         if error < tolerance:
-            print(f"Gauss-Seidel converged in {iteration + 1} iterations.")
+            #print(f"Gauss-Seidel converged in {iteration + 1} iterations.")
             break
     else:
         print("Warning: Gauss-Seidel did not converge.")
